@@ -1,1 +1,5 @@
-aircraft-damage-classifier
+# Information
+This program automates the classification of aircraft damage into two categories: 'dent' and 'crack'.
+This is accomplished here using a pre-trained VGG16 model as an image classifier, and a pre-trained Tranformer model to generate captions and summaries for the images.
+
+The data used is from the [Aircraft Damage Dataset](https://universe.roboflow.com/youssef-donia-fhktl/aircraft-damage-detection-1j9qk) provided on Roboflow
