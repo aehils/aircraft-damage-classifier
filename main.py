@@ -13,7 +13,7 @@ from keras.preprocessing import image
 
 import tensorflow as tf
 import matplotlib.pyplot as plt
-from tensorflow.keras.preprocessing.image import ImageDataGenerator # type: ignore
+from keras.src.legacy.preprocessing.image import ImageDataGenerator
 
 import tarfile, urllib.request, os, shutil
 
@@ -66,7 +66,6 @@ def main():
     train_datagen = ImageDataGenerator(rescale=1./255)
     valid_datagen = ImageDataGenerator(rescale=1./255)
     test_datagen = ImageDataGenerator(rescale=1./255)
-    
 
 if __name__ == '__main__':
     main()
