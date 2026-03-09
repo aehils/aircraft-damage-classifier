@@ -21,3 +21,8 @@ random.seed(seed_value)
 np.random.seed(seed_value)
 tf.random.set_seed(seed_value)
 
+# setting batch size, epochs and input image shape
+batch_size = 32
+epochs = 5
+img_rows, img_cols = 224, 224
+input_shape = (img_rows, img_cols, 3)
