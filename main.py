@@ -67,5 +67,30 @@ def main():
     valid_datagen = ImageDataGenerator(rescale=1./255)
     test_datagen = ImageDataGenerator(rescale=1./255)
 
+    train_generator = train_datagen.flow_from_directory(
+        train_dir,
+        target_size=(img_rows, img_cols),
+        batch_size=batch_size,
+        seed=seed_value,
+        class_mode='binary',
+        shuffle=True
+    )
+    valid_generator = valid_datagen.flow_from_directory(
+        valid_dir,
+        target_size=(img_rows, img_cols),
+        batch_size=batch_size,
+        seed=seed_value,
+        class_mode='binary',
+        shuffle=False
+    )
+    test_generator = test_datagen.flow_from_directory(
+        test_dir,
+        target_size=(img_rows, img_cols),
+        batch_size=batch_size,
+        seed=seed_value,
+        shuffle=False,
+        class_mode='binary'
+    )
+
 if __name__ == '__main__':
     main()
