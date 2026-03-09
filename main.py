@@ -92,5 +92,9 @@ def main():
         class_mode='binary'
     )
 
+    # loading pre-train VGG16 model
+    base_model = VGG16(include_top=False, weights='imagenet', 
+                       input_shape=(img_rows, img_cols, 3))
+
 if __name__ == '__main__':
     main()
