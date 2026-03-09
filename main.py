@@ -15,7 +15,7 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 from keras.src.legacy.preprocessing.image import ImageDataGenerator
 
-import tarfile, urllib.request, os, shutil
+import tarfile, urllib.request, os
 
 # set seeds for reproducibility
 seed_value = 42
@@ -99,6 +99,31 @@ def main():
     output = base_model.layers[-1].output
     output = keras.layers.Flatten()(output)
     base_model = Model(base_model.input, output)
+    # freeze base layers of VGG16
+    for layer in base_model.layers:
+        layer.trainable = False
+    
+    # build custom model architecture
+    model = Sequential()
+    model.add(Dense(512, activation='relu'))
+    model.add(Dropout(0.3))
+    model.add(Dense(512, activation='relu'))
+    model.add(Dropout(0.3))
+    model.add(Dense(1, activation='sigmoid'))
+        # compile!
+    model.compile(
+        optimizer=Adam(learning_rate=0.0001),
+        loss='binary_crossentropy',
+        metrics=['accuracy']
+    )
+
+    # train model
+    history = model.fit(
+        train_generator,
+        epochs=epochs,
+        validation_data=valid_generator
+    )
+    train_history = model.history.history
 
 if __name__ == '__main__':
     main()
