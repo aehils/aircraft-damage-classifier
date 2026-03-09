@@ -35,28 +35,38 @@ def fetch_dataset():
 
     # define location to save the data
     tar_filename = "aircraft_damage_dataset_v1.tar"
-    extracted_folder = "aircraft_damage_dataset_v1"   # where extracted contents will go
+    folder_name = "aircraft_damage_dataset_v1"   # name of the top-level folder inside .tar
     # actually download the .tar
-    urllib.request.urlretrieve(url, tar_filename)
-    print(f"\nDownloaded {tar_filename} – extracting...")
 
     # if dataset folder already exists...
-    if os.path.exists(extracted_folder):
-        print(f"The folder '{extracted_folder}' already exists. Removing the existing folder.")
-        
-        # remove it, keep things simple
-        shutil.rmtree(extracted_folder)
-        print(f"Removed the existing folder: {extracted_folder}")
-
-    # Extract the contents of the tar file
-    with tarfile.open(tar_filename, "r") as tar_ref:
-        tar_ref.extractall()  # This will extract to the current directory
-        print(f"Extracted {tar_filename} successfully.")
+    if os.path.exists(folder_name):
+        # skip download, no need to 
+        print(f"Data is available locally at the existing folder: {folder_name}. Download cancelled.")
+    else:
+        urllib.request.urlretrieve(url, tar_filename)
+        print(f"\nDownloaded {tar_filename} – extracting...")
+        # Extract the contents of the tar file
+        with tarfile.open(tar_filename, "r") as tar_ref:
+            tar_ref.extractall()  # This will extract to the current directory
+            print(f"Extracted {tar_filename} successfully.")
 
     # defining the directories for train, test and validation splits
-    extract_path = extracted_folder
-    train_dir = os.path.join(extract_path, 'train')
-    test_dir = os.path.join(extract_path, 'test')
-    valid_dir = os.path.join(extract_path, 'valid')
+    train_dir = os.path.join(folder_name, 'train')
+    test_dir = os.path.join(folder_name, 'test')
+    valid_dir = os.path.join(folder_name, 'valid')
 
-    return train_dir, test_dir, valid_dir
+    return train_dir, valid_dir, test_dir
+
+def main():
+    
+    # get data
+    train_dir, valid_dir, test_dir = fetch_dataset()
+
+    # create ImageDataGenerators to preprocess each data split
+    train_datagen = ImageDataGenerator(rescale=1./255)
+    valid_datagen = ImageDataGenerator(rescale=1./255)
+    test_datagen = ImageDataGenerator(rescale=1./255)
+    
+
+if __name__ == '__main__':
+    main()
