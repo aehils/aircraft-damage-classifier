@@ -15,6 +15,8 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 from tensorflow.keras.preprocessing.image import ImageDataGenerator # type: ignore
 
+import tarfile, urllib.request, os, shutil
+
 # set seeds for reproducibility
 seed_value = 42
 random.seed(seed_value)
