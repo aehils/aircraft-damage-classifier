@@ -1,6 +1,5 @@
 #!/usr/bin/env python3 
 
-import zipfile
 import keras
 import random
 
@@ -92,7 +91,7 @@ def main():
         class_mode='binary'
     )
 
-    # loading pre-train VGG16 model
+    # loading pre-trained VGG16 model
     base_model = VGG16(include_top=False, weights='imagenet', 
                        input_shape=(img_rows, img_cols, 3))
     
@@ -105,6 +104,7 @@ def main():
     
     # build custom model architecture
     model = Sequential()
+    model.add(base_model)
     model.add(Dense(512, activation='relu'))
     model.add(Dropout(0.3))
     model.add(Dense(512, activation='relu'))
@@ -123,7 +123,7 @@ def main():
         epochs=epochs,
         validation_data=valid_generator
     )
-    train_history = model.history.history
+    train_history = model.history.history   # access the training history
 
 if __name__ == '__main__':
     main()
