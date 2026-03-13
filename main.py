@@ -125,20 +125,36 @@ def main():
     )
     train_history = model.history.history   # access the training history
 
-    # plot the loss for both training and validation
+    # plot the LOSS for both training and validation
     plt.figure(figsize=(12, 4))
     plt.subplot(1, 2, 1)
     plt.title("Training Loss")  # training
     plt.ylabel("Loss")
     plt.xlabel('Epoch')
     plt.plot(train_history['loss'])
-
+    # ––––––––––––––
     plt.subplot(1, 2, 1)
     plt.title("Validation Loss")    # validation
     plt.ylabel("Loss")
     plt.xlabel('Epoch')
     plt.plot(train_history['val_loss'])
     plt.show()
+
+    # plot the ACCURACY for both training and validation sets
+    plt.figure(figsize=(5, 5))
+    plt.plot(train_history['accuracy'], label='Training Accuracy')
+    plt.plot(train_history['val_accuracy'], label='Validation Accuracy')
+    plt.title('Accuracy Curve')
+    plt.xlabel('Epochs')
+    plt.ylabel('Accuracy')
+    plt.legend()
+    plt.show()
+
+    # evaluate model performance on test data
+    test_loss, test_accuracy = model.evaluate(test_generator,
+                                              steps=(test_generator.samples // test_generator.batch_size))
+    print(f"Test Loss: {test_loss:.4f}")
+    print(f"Test Accuracy: {test_accuracy:.4f}")
 
 if __name__ == '__main__':
     main()
