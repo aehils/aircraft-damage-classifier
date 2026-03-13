@@ -125,5 +125,20 @@ def main():
     )
     train_history = model.history.history   # access the training history
 
+    # plot the loss for both training and validation
+    plt.figure(figsize=(12, 4))
+    plt.subplot(1, 2, 1)
+    plt.title("Training Loss")  # training
+    plt.ylabel("Loss")
+    plt.xlabel('Epoch')
+    plt.plot(train_history['loss'])
+
+    plt.subplot(1, 2, 1)
+    plt.title("Validation Loss")    # validation
+    plt.ylabel("Loss")
+    plt.xlabel('Epoch')
+    plt.plot(train_history['val_loss'])
+    plt.show()
+
 if __name__ == '__main__':
     main()
