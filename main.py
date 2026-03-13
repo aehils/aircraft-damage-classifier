@@ -92,9 +92,6 @@ def test_model_on_image(test_generator, model, index_to_plot=0):
     # Plot the selected image with its true and predicted labels
     plot_image_with_title(image=image_to_plot, model=model, true_label=true_label, predicted_label=predicted_label, class_names=class_names)
 
-
-
-
 def main():
     
     # get data
@@ -194,6 +191,12 @@ def main():
                                               steps=(test_generator.samples // test_generator.batch_size))
     print(f"Test Loss: {test_loss:.4f}")
     print(f"Test Accuracy: {test_accuracy:.4f}")
+
+    # test model on selected image
+    test_model_on_image(test_generator=test_generator,
+                        model=model,
+                        index_to_plot=1)
+    
 
 if __name__ == '__main__':
     main()
