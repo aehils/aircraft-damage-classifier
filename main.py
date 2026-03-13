@@ -196,7 +196,6 @@ def main():
     test_model_on_image(test_generator=test_generator,
                         model=model,
                         index_to_plot=1)
-    
 
 if __name__ == '__main__':
     main()
