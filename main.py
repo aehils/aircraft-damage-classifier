@@ -16,6 +16,8 @@ from keras.src.legacy.preprocessing.image import ImageDataGenerator
 
 import tarfile, urllib.request, os
 
+import img_caption_summary as img
+
 # set seeds for reproducibility
 seed_value = 42
 random.seed(seed_value)
@@ -91,6 +93,9 @@ def test_model_on_image(test_generator, model, index_to_plot=0):
 
     # Plot the selected image with its true and predicted labels
     plot_image_with_title(image=image_to_plot, model=model, true_label=true_label, predicted_label=predicted_label, class_names=class_names)
+
+def generate_text(image_path, task):
+    return img.BlipCaptionSummaryLayer(processor=img.processor, model=img.model)(image_path, task)
 
 def main():
     
