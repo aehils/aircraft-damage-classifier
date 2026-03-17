@@ -1,0 +1,7 @@
+tensorflow==2.17.1
+torch==2.2.0
+torchvision==0.17.0
+transformers==4.38.2
+pillow==11.1.0
+matplotlib==3.9.2
+numpy
