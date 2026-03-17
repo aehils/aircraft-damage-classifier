@@ -16,6 +16,8 @@ from keras.src.legacy.preprocessing.image import ImageDataGenerator
 
 import tarfile, urllib.request, os
 
+import img_caption_summary as img
+
 # set seeds for reproducibility
 seed_value = 42
 random.seed(seed_value)
@@ -91,6 +93,9 @@ def test_model_on_image(test_generator, model, index_to_plot=0):
 
     # Plot the selected image with its true and predicted labels
     plot_image_with_title(image=image_to_plot, model=model, true_label=true_label, predicted_label=predicted_label, class_names=class_names)
+
+def generate_text(image_path, task):
+    return img.BlipCaptionSummaryLayer(processor=img.processor, model=img.model)(image_path, task)
 
 def main():
     
@@ -169,7 +174,7 @@ def main():
     plt.xlabel('Epoch')
     plt.plot(train_history['loss'])
     # ––––––––––––––
-    plt.subplot(1, 2, 1)
+    plt.subplot(1, 2, 2)
     plt.title("Validation Loss")    # validation
     plt.ylabel("Loss")
     plt.xlabel('Epoch')
@@ -196,6 +201,32 @@ def main():
     test_model_on_image(test_generator=test_generator,
                         model=model,
                         index_to_plot=1)
+    
+
+    ################################################################################
+    #                                                                              #
+    #                   GENERATE A CAPTION FOR AN IMAGE                            #
+    #                                                                              #
+    ################################################################################
+
+    # image url
+    image_url = "aircraft_damage_dataset_v1/test/dent/149_22_JPG_jpg.rf.4899cbb6f4aad9588fa3811bb886c34d.jpg"
+    # load image and display 
+    img = plt.imread(image_url)
+    plt.imshow(img)
+    plt.axis('off')  # Hide the axis
+    plt.show()
+
+    # actual path of image
+    image_path = tf.constant("aircraft_damage_dataset_v1/test/dent/149_22_JPG_jpg.rf.4899cbb6f4aad9588fa3811bb886c34d.jpg")  
+
+    # Generate caption
+    caption = generate_text(image_path, tf.constant("caption"))
+    print("Caption:", caption.numpy().decode("utf-8"))
+
+    # Generate summary
+    summary = generate_text(image_path, tf.constant("summary"))
+    print("Summary:", summary.numpy().decode("utf-8"))
 
 if __name__ == '__main__':
     main()
